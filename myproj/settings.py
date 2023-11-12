@@ -39,7 +39,15 @@ INSTALLED_APPS = [
     'base',
     'corsheaders',
     'rest_framework',
+    'rest_framework_simplejwt',
 ]
+
+# Use the JWT authentication for your project
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -118,7 +126,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
@@ -130,23 +138,17 @@ from secretkey.secretkey import SECRET_KEY
 CORS_ALLOW_ALL_ORIGINS = True
 
 
-STATIC_URL = '/static/'
 MEDIA_URL = '/images/'
 
-
 STATICFILES_DIRS = [
-    BASE_DIR / 'static',
     BASE_DIR / "Front/HTML",
     BASE_DIR / "Front/CSS",
     BASE_DIR / "Front/JS",
 ]
 
-
-
 MEDIA_ROOT = BASE_DIR / 'static/images'
-STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATIC_ROOT = BASE_DIR / 'static'
 
 
 # settings.py
-from secretkey.email import EMAIL_BACKEND,EMAIL_HOST_PASSWORD,EMAIL_HOST,EMAIL_HOST_USER,EMAIL_PORT,EMAIL_USE_TLS
-
+from secretkey.email import EMAIL_BACKEND, EMAIL_HOST_PASSWORD, EMAIL_HOST, EMAIL_HOST_USER, EMAIL_PORT, EMAIL_USE_TLS

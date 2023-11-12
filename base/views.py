@@ -3,6 +3,35 @@ from rest_framework.response import Response
 from rest_framework import status
 from .models import Product, Category, Order, OrderDetail
 from .Serializers import ProductSerializer, CategorySerializer, OrderSerializer, OrderDetailSerializer
+from django.contrib.auth import login
+from django.http import JsonResponse
+from .forms import RegistrationForm
+from django.core.mail import EmailMessage
+from django.http import JsonResponse
+from django.views.decorators.http import require_POST
+import json
+from django.views.decorators.csrf import csrf_exempt
+def format_errors(errors):
+    formatted_errors = {}
+    for field, field_errors in errors.items():
+        formatted_errors[field] = [str(error) for error in field_errors]
+    return formatted_errors
+
+@api_view(['POST'])
+def register_view(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        form = RegistrationForm(data)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return Response({'success': True}, status=status.HTTP_201_CREATED)
+        else:
+            formatted_errors = format_errors(form.errors)
+            return Response({'success': False, 'errors': formatted_errors}, status=status.HTTP_400_BAD_REQUEST)
+    else:
+        return Response({'detail': 'Method not allowed'}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
+
 
 # Views for Product
 @api_view(['GET', 'POST'])
@@ -142,11 +171,7 @@ def order_detail_detail(request, pk):
     
 
 
-from django.core.mail import EmailMessage
-from django.http import JsonResponse
-from django.views.decorators.http import require_POST
-import json
-from django.views.decorators.csrf import csrf_exempt
+
 @csrf_exempt
 @require_POST
 def contact(request):
