@@ -29,8 +29,53 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         } catch (error) {
             // Handle registration error
-            console.error("Registration error:", error.response ? error.response.data : error.message);
-            // Display error message to the user
+            if (error.response) {
+                // The request was made and the server responded with a status code
+                // Display specific error messages based on the response status or data
+                console.error("Registration failed with status:", error.response.status);
+                if (error.response.data && error.response.data.errors) {
+                    alert("User not created because: " + Object.values(error.response.data.errors).flat().join(" "));
+                } else {
+                    alert("User not created due to registration error.");
+                }
+            } else if (error.request) {
+                // The request was made but no response was received
+                console.error("No response received:", error.request);
+                alert("User not created. No response received from the server.");
+            } else {
+                // Something happened in setting up the request that triggered an Error
+                console.error("Error setting up the request:", error.message);
+                alert("User not created due to an internal error.");
+            }
         }
     });
+});
+
+// user_info.js
+
+document.addEventListener("DOMContentLoaded", async function () {
+    const welcomeContainer = document.getElementById("welcomeContainer");
+    const MY_SERVER = "http://127.0.0.1:8000/";
+    // Check if a user is already logged in
+    const checkLoggedInUser = async () => {
+        try {
+            const response = await axios.get(MY_SERVER + "get_current_user/", {
+                headers: {
+                    Authorization: `Bearer ${sessionStorage.getItem('access_token')}`,
+                },
+            });
+
+            if (response && response.data && response.data.username) {
+                // Display welcome message
+                welcomeContainer.innerHTML = `<p>Welcome back, ${response.data.username}!</p>`;
+            } else {
+                // No user logged in
+                welcomeContainer.innerHTML = '<p>No user logged in currently.</p>';
+            }
+        } catch (error) {
+            console.error("Error checking logged-in user:", error);
+        }
+    };
+
+    checkLoggedInUser();
 });

@@ -11,6 +11,11 @@ from django.http import JsonResponse
 from django.views.decorators.http import require_POST
 import json
 from django.views.decorators.csrf import csrf_exempt
+from rest_framework_simplejwt.views import TokenObtainPairView
+from rest_framework.response import Response
+from rest_framework import status
+from rest_framework.permissions import IsAuthenticated
+
 def format_errors(errors):
     formatted_errors = {}
     for field, field_errors in errors.items():
@@ -193,3 +198,49 @@ def contact(request):
     except Exception as e:
         return JsonResponse({'success': False, 'error': str(e)})
 
+class LoginView(TokenObtainPairView):
+    # You can customize the behavior if needed
+    def post(self, request, *args, **kwargs):
+        response = super().post(request, *args, **kwargs)
+        # You can add additional logic or data to the response if needed
+        return response
+    
+# views.py
+
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+
+class LoginView(TokenObtainPairView):
+    # You can customize the behavior if needed
+    def post(self, request, *args, **kwargs):
+        response = super().post(request, *args, **kwargs)
+        
+        # Include the username in the response
+        user = self.user
+        username = user.username if user.is_authenticated else None
+
+        data = {
+            'access': response.data['access'],
+            'refresh': response.data['refresh'],
+            'username': username,
+        }
+
+        return Response(data, status=status.HTTP_200_OK)
+
+
+# class CurrentUserView(APIView):
+#     def get(self, request):
+#         # Retrieve the currently logged-in user's username
+#         username = request.user.username if request.user.is_authenticated else None
+#         return Response({'username': username}, status=status.HTTP_200_OK)
+class CurrentUserView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        user_data = {
+            'username': request.user.username,
+            'email': request.user.email,
+            # Add any other user-related data you want to include
+        }
+        return Response(user_data, status=status.HTTP_200_OK)

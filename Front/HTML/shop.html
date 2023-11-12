@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop - Supermarket Project</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/Front/CSS/styles.css">
+    <!-- Add your CSS file path above -->
+</head>
+
+<body>
+    <header>
+        <nav>
+            <div class="logo">Supermarket</div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="shop.html">Shop</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="login.html">Login</a></li>
+                <li><a href="register.html">Register</a></li>
+            </ul>
+
+            <!-- Include user_info container -->
+            <div id="welcomeContainer"></div>
+
+            <!-- My Cart Button -->
+            <button id="myCartBtn" class="btn btn-primary" data-toggle="modal" data-target="#myCartModal">
+                My Cart
+            </button>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Products Section -->
+        <section id="products">
+            <h2>All Products</h2>
+            <div class="container">
+                <!-- Add a sub nav bar with categories -->
+                <ul class="nav nav-pills mb-3" id="categoriesNav">
+                    <!-- Categories will be dynamically added here -->
+                </ul>
+            </div>
+            <div id="productList" class="row">
+                <!-- Products will be dynamically added here -->
+            </div>
+        </section>
+    </main>
+
+    <!-- My Cart Modal -->
+    <div class="modal" id="myCartModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">My Cart</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal Body -->
+                <div class="modal-body">
+                    <ul id="cartList" class="list-group">
+                        <!-- Cart items will be dynamically added here -->
+                    </ul>
+                </div>
+
+                <!-- Modal Footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2023 Supermarket Project</p>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="/Front/JS/shop.js"></script>
+</body>
+
+</html>
