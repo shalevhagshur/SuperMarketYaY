@@ -1,0 +1,62 @@
+/* Reset some default styles */
+body, ul {
+    margin: 0;
+    padding: 0;
+}
+
+/* Styles for the navigation bar */
+.navbar {
+    background-color: darkred;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+}
+
+.navbar a {
+    color: white;
+    text-decoration: none;
+    margin: 0 15px;
+}
+
+.navbar-right {
+    display: flex;
+    align-items: center;
+}
+
+.navbar-submenu {
+    position: relative;
+}
+
+.navbar-submenu ul {
+    display: none;
+    position: absolute;
+    background-color: black;
+    list-style: none;
+    padding: 10px;
+    left: 0;
+    top: 100%;
+}
+
+.navbar-submenu:hover ul {
+    display: block;
+}
+
+/* Media query to show/hide the toggle button based on screen width */
+@media (max-width: 768px) {
+    .navbar-toggle {
+        display: flex;
+    }
+    
+    .navbar-menu {
+        display: none;
+        flex-direction: column;
+        background-color: gray;
+        width: 100%;
+    }
+    
+    .navbar-menu.active {
+        display: flex;
+    }
+}
