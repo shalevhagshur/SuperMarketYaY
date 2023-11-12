@@ -18,4 +18,6 @@ urlpatterns = [
     # OrderDetail URLs
     path('orderdetails/', views.order_detail_list, name='orderdetail-list'),
     path('orderdetails/<int:pk>/', views.order_detail_detail, name='orderdetail-detail'),
+
+    path('contact/', views.contact, name='contact'),
 ]

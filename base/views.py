@@ -139,3 +139,32 @@ def order_detail_detail(request, pk):
     elif request.method == 'DELETE':
         order_detail.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+    
+
+
+from django.core.mail import EmailMessage
+from django.http import JsonResponse
+from django.views.decorators.http import require_POST
+import json
+from django.views.decorators.csrf import csrf_exempt
+@csrf_exempt
+@require_POST
+def contact(request):
+    data = json.loads(request.body)
+    name = data.get('name', '')
+    email = data.get('email', '')
+    message = data.get('message', '')
+
+    # Replace 'your_email@gmail.com' with your actual Gmail address
+    to_email = 'shalevworkhightech@gmail.com'
+    subject = 'New Contact Form Submission'
+    body = f'Name: {name}\nEmail: {email}\nMessage:\n{message}'
+
+    try:
+        email_message = EmailMessage(subject, body, to=[to_email])
+        email_message.send()
+
+        return JsonResponse({'success': True})
+    except Exception as e:
+        return JsonResponse({'success': False, 'error': str(e)})
+

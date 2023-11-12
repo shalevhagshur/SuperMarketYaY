@@ -125,6 +125,8 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+from secretkey.secretkey import SECRET_KEY
+
 CORS_ALLOW_ALL_ORIGINS = True
 
 
@@ -143,3 +145,8 @@ STATICFILES_DIRS = [
 
 MEDIA_ROOT = BASE_DIR / 'static/images'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+
+# settings.py
+from secretkey.email import EMAIL_BACKEND,EMAIL_HOST_PASSWORD,EMAIL_HOST,EMAIL_HOST_USER,EMAIL_PORT,EMAIL_USE_TLS
+
