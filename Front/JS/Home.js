@@ -147,12 +147,15 @@ document.addEventListener("DOMContentLoaded", function () {
     }
     
     function formatPrice(price) {
-        if (typeof price === 'number') {
-            return "$" + price.toFixed(2);
+        const numericPrice = Number(price);
+    
+        if (!isNaN(numericPrice)) {
+            return "$" + numericPrice.toFixed(2);
         } else {
             return "Price not available";
         }
     }
+    
     
 
     // Function to adjust displayed products based on the direction (-1 for prev, 1 for next)
