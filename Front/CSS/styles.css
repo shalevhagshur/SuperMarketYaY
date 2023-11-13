@@ -146,3 +146,16 @@ body, h1, h2, p, ul {
     margin-top: -15px; /* Adjust the margin-top to move the arrows up */
     margin-right: 50px; /* Add margin between the arrows */
 }
+/* Add this CSS to your stylesheet or style section */
+
+/* Customize the modal width */
+#myCartModal .modal-dialog {
+    max-width: 800px; /* Adjust the width as needed */
+}
+
+/* Ensure the quantity is always visible */
+.cart-item-quantity {
+    width: 60px; /* Adjust the width as needed */
+}
+
+/* Adjust other styles as needed */
