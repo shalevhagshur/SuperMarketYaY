@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Supermarket Project</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/Front/CSS/styles.css">
+    <!-- Add your CSS file path above -->
+</head>
+
+<body>
+    <header>
+        <nav>
+            <div class="logo">Supermarket</div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="shop.html">Shop</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="login.html">Login</a></li>
+                <li><a href="register.html">Register</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="home">
+            <h1>Welcome to our Supermarket!</h1>
+            <p>Discover a wide range of products and enjoy a seamless shopping experience.</p>
+        </section>
+
+        <!-- Categories Carousel -->
+        <section id="categories">
+            <h2>Product Categories</h2>
+            <div id="categoryCarousel" class="carousel slide" data-ride="carousel">
+                <div class="carousel-inner" id="categoryCarouselInner">
+                    <!-- Categories will be dynamically added here -->
+                </div>
+                <a class="carousel-control-prev category-carousel-control-prev" href="#categoryCarousel" role="button"
+                    data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next category-carousel-control-next" href="#categoryCarousel" role="button"
+                    data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </div>
+        </section>
+
+        <!-- Products Carousel -->
+        <section id="products">
+            <h2>Featured Products</h2>
+            <div id="productCarousel" class="carousel slide" data-ride="carousel">
+                <div class="carousel-inner" id="productCarouselInner">
+                    <!-- Products will be dynamically added here -->
+                </div>
+                <a class="carousel-control-prev product-carousel-control-prev" href="#productCarousel" role="button"
+                    data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next product-carousel-control-next" href="#productCarousel" role="button"
+                    data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2023 Supermarket Project</p>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="/Front/JS/Home.js"></script>
+</body>
+
+</html>

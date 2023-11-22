@@ -30,4 +30,6 @@ urlpatterns = [
     path('login/', views.LoginView.as_view(), name='login'),
 
     path('get_current_user/', views.CurrentUserView.as_view(), name='get_current_user'),
+    path('submit_order/', views.submit_order2, name='submit-order'),
+    path('api/get_user_id/<str:username>/', views.get_user_id_by_username)
 ]

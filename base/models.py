@@ -30,4 +30,11 @@ class OrderDetail(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField()
     subtotal = models.DecimalField(max_digits=10, decimal_places=2)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    # Remove the user field, as it will be obtained through the related Order
+
+    def save(self, *args, **kwargs):
+        # Set the user before saving based on the related Order
+        self.user = self.order.customer
+        super(OrderDetail, self).save(*args, **kwargs)
+

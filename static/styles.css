@@ -1,0 +1,148 @@
+/* Add this style rule for category boxes */
+.category-box {
+    display: inline-block;
+    margin: 0 10px; /* Add some margin between category boxes */
+}
+
+/* Reset some default styles */
+body, h1, h2, p, ul {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+header {
+    background-color: #1a1a1a;
+    color: #fff;
+    padding: 10px 20px;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 1.5rem;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+}
+
+.nav-links li {
+    margin-right: 20px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #fff;
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+.nav-links a:hover {
+    color: #ffd700;
+}
+
+main {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+section {
+    margin-bottom: 40px;
+}
+
+h1, h2 {
+    color: #333;
+}
+
+footer {
+    text-align: center;
+    padding: 10px;
+    background-color: #1a1a1a;
+    color: #fff;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    main {
+        padding: 10px;
+    }
+
+    .nav-links {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .nav-links li {
+        margin: 0 0 10px 0;
+    }
+}
+
+/* Add this style rule for category boxes */
+.category-box {
+    display: inline-block;
+    margin: 0 10px; /* Add some margin between category boxes */
+}
+
+/* Styles for carousel controls */
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    filter: invert(100%);
+    width: 30px; /* Adjust the width as needed */
+    height: 30px; /* Adjust the height as needed */
+}
+
+/* Styles for carousel controls */
+.carousel-control-prev,
+.carousel-control-next {
+    color: black;
+    font-size: 30px; /* Adjust the font size as needed */
+    margin-top: -15px; /* Adjust the margin-top to move the arrows up */
+    margin-right: 50px; /* Add margin between the arrows */
+}
+
+/* Add this style rule for product boxes */
+.product-box {
+    display: inline-block;
+    margin: 0 10px; /* Add some margin between product boxes */
+    text-align: center;
+}
+
+/* Reset some default styles */
+body, h1, h2, p, ul {
+    margin: 0;
+    padding: 0;
+}
+
+/* ... (your existing styles) ... */
+
+/* Styles for carousel controls (if not already included in your CSS) */
+.product-carousel-control-prev-icon,
+.product-carousel-control-next-icon {
+    filter: invert(100%);
+    width: 30px; /* Adjust the width as needed */
+    height: 30px; /* Adjust the height as needed */
+}
+
+/* Styles for carousel controls (if not already included in your CSS) */
+.product-carousel-control-prev,
+.product-carousel-control-next {
+    color: black;
+    font-size: 30px; /* Adjust the font size as needed */
+    margin-top: -15px; /* Adjust the margin-top to move the arrows up */
+    margin-right: 50px; /* Add margin between the arrows */
+}

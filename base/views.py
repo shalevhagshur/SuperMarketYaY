@@ -9,12 +9,31 @@ from .forms import RegistrationForm
 from django.core.mail import EmailMessage
 from django.http import JsonResponse
 from django.views.decorators.http import require_POST
+from django.contrib.auth.models import User
 import json
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
+
+
+@api_view(['POST'])
+def submit_order2(request):
+    if request.method == 'POST':
+        serializer = OrderSerializer(data=request.data)
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response({'detail': 'Order submitted successfully'}, status=status.HTTP_201_CREATED)
+        else:
+            errors = {
+                'order_errors': serializer.errors
+            }
+            return Response(errors, status=status.HTTP_400_BAD_REQUEST)
+    else:
+        return Response({'detail': 'Method not allowed'}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
+
 
 def format_errors(errors):
     formatted_errors = {}
@@ -216,14 +235,16 @@ class LoginView(TokenObtainPairView):
     def post(self, request, *args, **kwargs):
         response = super().post(request, *args, **kwargs)
         
-        # Include the username in the response
+        # Include the username and user ID in the response
         user = self.user
         username = user.username if user.is_authenticated else None
+        user_id = user.id if user.is_authenticated else None
 
         data = {
             'access': response.data['access'],
             'refresh': response.data['refresh'],
             'username': username,
+            'user_id': user_id,
         }
 
         return Response(data, status=status.HTTP_200_OK)
@@ -244,3 +265,12 @@ class CurrentUserView(APIView):
             # Add any other user-related data you want to include
         }
         return Response(user_data, status=status.HTTP_200_OK)
+    
+@api_view(['GET'])
+def get_user_id_by_username(request, username):
+    try:
+        user = User.objects.get(username=username)
+        user_id = user.id
+        return Response({'user_id': user_id}, status=status.HTTP_200_OK)
+    except User.DoesNotExist:
+        return Response({'error': 'User not found'}, status=status.HTTP_404_NOT_FOUND)

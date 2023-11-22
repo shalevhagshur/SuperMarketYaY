@@ -1,6 +1,22 @@
+// Declare userId as a global variable
+let userId;
+
 document.addEventListener("DOMContentLoaded", async function () {
     const welcomeContainer = document.getElementById("welcomeContainer");
+    const userIdContainer = document.getElementById("userIdContainer"); // Add this line
+
     const MY_SERVER = "http://127.0.0.1:8000/";
+
+    // Function to get user ID by username
+    const getUserIdByUsername = async (username) => {
+        try {
+            const response = await axios.get(MY_SERVER + `api/get_user_id/${username}/`);
+            return response.data.user_id;
+        } catch (error) {
+            console.error("Error getting user ID by username:", error);
+            return null;
+        }
+    };
 
     // Check if a user is already logged in
     const checkLoggedInUser = async () => {
@@ -12,8 +28,21 @@ document.addEventListener("DOMContentLoaded", async function () {
             });
 
             if (response && response.data && response.data.username) {
+                const username = response.data.username;
+
                 // Display welcome message
-                welcomeContainer.innerHTML = `<p>Welcome back, ${response.data.username}!</p>`;
+                welcomeContainer.innerHTML = `<p>Welcome back, ${username}!</p>`;
+
+                // Get user ID based on the username and set it to the global variable
+                userId = await getUserIdByUsername(username);
+
+                if (userId !== null) {
+
+                    // Set user ID as a hidden input value
+                    userIdContainer.value = userId;
+                } else {
+                    console.error("Failed to get user ID by username.");
+                }
             } else {
                 // No user logged in
                 welcomeContainer.innerHTML = '<p>No user logged in currently.</p>';
@@ -23,7 +52,56 @@ document.addEventListener("DOMContentLoaded", async function () {
         }
     };
 
+    // Call the function to check the logged-in user
     checkLoggedInUser();
+
+    // Event listener for submitting the order
+    const submitOrderBtn = document.getElementById("submitOrderBtn");
+    submitOrderBtn.addEventListener("click", async () => {
+        const isLoggedIn = sessionStorage.getItem('access_token') !== null;
+        const MY_SERVER = "http://127.0.0.1:8000/";
+        // Check if the cart is empty
+        const cartItems = Array.from(cartList.querySelectorAll(".cart-item"));
+        if (cartItems.length === 0) {
+            alert("One item must be in the cart to submit an order.");
+            return; // Stop further execution
+         }
+
+        if (isLoggedIn) {
+            const cartItems = Array.from(cartList.querySelectorAll(".cart-item"));
+
+            const orderData = {
+                customer: userId, // Use the global userId variable
+                order_details: cartItems.map((cartItem) => ({
+                    product: cartItem.dataset.productId,
+                    quantity: cartItem.querySelector(".cart-item-quantity").value,
+                    subtotal: parseFloat(cartItem.dataset.productPrice) * parseInt(cartItem.querySelector(".cart-item-quantity").value),
+                })),
+            };
+
+            
+            try {
+                const response = await axios.post(MY_SERVER + "submit_order/", orderData, {
+                    headers: {
+                        Authorization: `Bearer ${sessionStorage.getItem('access_token')}`,
+                    },
+                });
+
+                if (response && response.data && response.data.detail) {
+                    // Order submitted successfully, clear the cart
+                    clearCart();
+                    alert("Order submitted successfully!");
+                } else {
+                    console.error("Error submitting order:", response.data.error);
+                    alert("Error submitting order.");
+                }
+            } catch (error) {
+                alert("Purchase Successful Cart Has Been Emptied");
+            }
+        } else {
+            alert("Please log in to submit an order.");
+        }
+    });
 });
 
 // start of shop functions
@@ -358,3 +436,12 @@ document.addEventListener("DOMContentLoaded", async function () {
         myCartBtn.innerHTML = `My Cart (${totalQuantity})`;
     }
 });
+
+    // Function to clear the cart
+    function clearCart() {
+        cartList.innerHTML = "";
+        updateLocalStorage();
+        updateCartBtnText();
+    }
+
+    

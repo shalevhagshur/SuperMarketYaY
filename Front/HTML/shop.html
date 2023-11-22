@@ -7,6 +7,11 @@
     <title>Shop - Supermarket Project</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="/Front/CSS/styles.css">
+    <!-- <script src="https://cdn.jsdelivr.net/npm/jsonwebtoken@8.5.1"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/crypto-js.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/hmac-sha256.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/enc-base64.js"></script>
+
     <!-- Remove the Bootstrap 5 links -->
     <!-- Add your CSS file path above -->
 </head>
@@ -25,6 +30,9 @@
 
             <!-- Include user_info container -->
             <div id="welcomeContainer"></div>
+
+            <!-- Add a hidden input element to store the user ID -->
+            <input type="hidden" id="userIdContainer">
 
             <!-- My Cart Button -->
             <button id="myCartBtn" class="btn btn-primary" data-toggle="modal" data-target="#myCartModal">
@@ -65,6 +73,9 @@
                     <ul id="cartList" class="list-group">
                         <!-- Cart items will be dynamically added here -->
                     </ul>
+
+                    <!-- Submit Order Button Inside Modal Body -->
+                    <button id="submitOrderBtn" class="btn btn-success">Submit Order</button>
                 </div>
 
                 <!-- Modal Footer -->
@@ -84,7 +95,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script src="/Front/JS/shop.js"></script>
+    <script type="module" src="/Front/JS/shop.js"></script>
+
 </body>
 
 </html>
