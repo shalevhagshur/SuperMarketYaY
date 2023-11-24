@@ -55,7 +55,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
 document.addEventListener("DOMContentLoaded", async function () {
     const welcomeContainer = document.getElementById("welcomeContainer");
+    const loginNavItem = document.getElementById("loginNavItem");
+    const registerNavItem = document.getElementById("registerNavItem");
+    const orderHistoryNavItem = document.getElementById("orderHistoryNavItem");
+    const logoutNavItem = document.getElementById("logoutNavItem");
+
     const MY_SERVER = "http://127.0.0.1:8000/";
+
     // Check if a user is already logged in
     const checkLoggedInUser = async () => {
         try {
@@ -68,9 +74,21 @@ document.addEventListener("DOMContentLoaded", async function () {
             if (response && response.data && response.data.username) {
                 // Display welcome message
                 welcomeContainer.innerHTML = `<p>Welcome back, ${response.data.username}!</p>`;
+
+                // If the user is logged in, show Order History and Logout, hide Login and Register
+                orderHistoryNavItem.style.display = "block";
+                logoutNavItem.style.display = "block";
+                loginNavItem.style.display = "none";
+                registerNavItem.style.display = "none";
             } else {
                 // No user logged in
                 welcomeContainer.innerHTML = '<p>No user logged in currently.</p>';
+
+                // If no user is logged in, show Login and Register, hide Order History and Logout
+                orderHistoryNavItem.style.display = "none";
+                logoutNavItem.style.display = "none";
+                loginNavItem.style.display = "block";
+                registerNavItem.style.display = "block";
             }
         } catch (error) {
             console.error("Error checking logged-in user:", error);

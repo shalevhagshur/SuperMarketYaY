@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Supermarket Project</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/Front/CSS/styles.css">
+    <!-- Add your CSS file path above -->
+</head>
+
+<body>
+    <header>
+        <nav>
+            <div class="logo">Supermarket</div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="shop.html">Shop</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li id="loginNavItem"><a href="login.html">Login</a></li>
+                <li id="registerNavItem"><a href="register.html">Register</a></li>
+                <li id="logoutNavItem" style="display: none;"><a href="logout.html" onclick="logout()">Logout</a></li>
+                <li id="orderHistoryNavItem" style="display: none;"><a href="order_history.html">Order History</a></li>
+            </ul>
+
+            <!-- Include user_info container -->
+            <div id="welcomeContainer"></div>
+        </nav>
+    </header>
+
+    <main class="container mt-4">
+        <section id="orderHistory">
+            <h2>Welcome, <span id="username"></span>!</h2>
+            <p>View your order history below:</p>
+
+            <!-- Order Options -->
+            <div class="form-group">
+                <label for="orderOptions">Select Order:</label>
+                <select class="form-control" id="orderOptions">
+                    <option value="all">All Orders</option>
+                    <option value="recent">3 Most Recent Orders</option>
+                </select>
+            </div>
+
+            <!-- Display Orders using Bootstrap Cards -->
+            <div id="orderCards" class="row mt-4"></div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2023 Supermarket Project</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="/Front/JS/order_history.js"></script>
+    <!-- Include Bootstrap JS and any additional JS files here -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+
+</html>

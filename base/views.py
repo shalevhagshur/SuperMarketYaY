@@ -125,14 +125,16 @@ def category_detail(request, pk):
         category.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
-# Views for Order
 @api_view(['GET', 'POST'])
 def order_list(request):
     if request.method == 'GET':
+        # Fetch all orders
         orders = Order.objects.all()
         serializer = OrderSerializer(orders, many=True)
         return Response(serializer.data)
+
     elif request.method == 'POST':
+        # Create a new order
         serializer = OrderSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
