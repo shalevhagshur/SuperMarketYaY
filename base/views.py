@@ -1,4 +1,5 @@
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
+
 from rest_framework.response import Response
 from rest_framework import status
 from .models import Product, Category, Order, OrderDetail
@@ -276,3 +277,20 @@ def get_user_id_by_username(request, username):
         return Response({'user_id': user_id}, status=status.HTTP_200_OK)
     except User.DoesNotExist:
         return Response({'error': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def user_orders(request):
+    user = request.user
+    orders = Order.objects.filter(customer=user)
+    serializer = OrderSerializer(orders, many=True)
+    return Response(serializer.data)
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def recent_orders(request):
+    user = request.user
+    recent_orders = Order.objects.filter(customer=user).order_by('-order_date')[:3]
+    serializer = OrderSerializer(recent_orders, many=True)
+    return Response(serializer.data)

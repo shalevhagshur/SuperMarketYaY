@@ -25,16 +25,19 @@ class Order(models.Model):
     customer = models.ForeignKey(User, on_delete=models.CASCADE)
     order_date = models.DateTimeField(auto_now_add=True)
 
+    @property
+    def order_details(self):
+        return self.orderdetail_set.all()  # Assuming the related name is 'orderdetail_set'
+
 class OrderDetail(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField()
     subtotal = models.DecimalField(max_digits=10, decimal_places=2)
 
-    # Remove the user field, as it will be obtained through the related Order
-
     def save(self, *args, **kwargs):
         # Set the user before saving based on the related Order
         self.user = self.order.customer
         super(OrderDetail, self).save(*args, **kwargs)
+
 

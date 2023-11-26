@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", function () {
             // Check if the response has data property before accessing it
             if (response && response.data) {
                 // Handle successful registration
-                console.log("Registration successful:", response.data);
+                alert("Registration successful");
                 // Redirect to the home page or show a success message
             } else {
                 console.error("Invalid response format:", response);

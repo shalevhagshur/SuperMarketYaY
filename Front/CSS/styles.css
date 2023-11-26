@@ -159,3 +159,10 @@ body, h1, h2, p, ul {
 }
 
 /* Adjust other styles as needed */
+/* Add this to your CSS styles */
+.category-link, .all-categories-link {
+    background-color: #000000;
+    color: #fff;
+    margin-right: 10px; /* Adjust the margin as needed */
+}
+

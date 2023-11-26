@@ -20,6 +20,9 @@ urlpatterns = [
     path('orderdetails/', views.order_detail_list, name='orderdetail-list'),
     path('orderdetails/<int:pk>/', views.order_detail_detail, name='orderdetail-detail'),
 
+    path('user_orders/', views.user_orders, name='user-orders'),
+    path('recent_orders/', views.recent_orders, name='recent-orders'),
+
     path('contact/', views.contact, name='contact'),
 
     path('token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
