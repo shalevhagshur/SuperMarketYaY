@@ -500,3 +500,6 @@ function clearCart() {
     updateTotalOrderPrice();
 }
 
+function loadmycart() {
+
+}
