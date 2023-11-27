@@ -500,6 +500,51 @@ function clearCart() {
     updateTotalOrderPrice();
 }
 
+// Function to load myCart from local storage
 function loadmycart() {
+    const MY_SERVER = "http://127.0.0.1:8000/";
+    const cartList = document.getElementById("cartList");
 
+    try {
+        // Retrieve the cart data from local storage
+        const cartData = JSON.parse(localStorage.getItem("myCart")) || [];
+
+        // Clear existing content in the cartList
+        cartList.innerHTML = "";
+
+        // Iterate through the cartData and add each item to the cartList
+        cartData.forEach((item) => {
+            const cartItem = document.createElement("li");
+            cartItem.classList.add("list-group-item", "d-flex", "justify-content-between", "align-items-center", "cart-item");
+            cartItem.dataset.productId = item.productId;
+            cartItem.dataset.productName = item.productName;
+            cartItem.dataset.productPrice = item.productPrice;
+            cartItem.dataset.productImage = item.productImage;
+
+            cartItem.innerHTML = `<img class="cart-item-image" src="${item.productImage}">
+                             ${item.productName} - $${parseFloat(item.productPrice).toFixed(2)}
+                             <div class="input-group input-group-sm">
+                                 <div class="input-group-prepend">
+                                     <button class="btn btn-outline-secondary remove-from-cart" type="button">Remove</button>
+                                 </div>
+                                 <input type="number" class="form-control cart-item-quantity" value="${item.quantity}" min="1">
+                                 <div class="input-group-append">
+                                     <button class="btn btn-outline-secondary add-to-cart" type="button">Add</button>
+                                 </div>
+                             </div>`;
+
+            cartList.appendChild(cartItem);
+        });
+
+        // Update the total order price
+        updateTotalOrderPrice();
+    } catch (error) {
+        console.error("Error loading myCart from local storage:", error);
+    }
 }
+
+// Call the loadmycart function when the DOM is loaded
+document.addEventListener("DOMContentLoaded", function () {
+    loadmycart();
+    updateCartBtnText();
+});
