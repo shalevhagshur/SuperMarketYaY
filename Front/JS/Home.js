@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const categoriesSection = document.getElementById("categoryCarouselInner");
     const prevCategoryButton = document.querySelector(".category-carousel-control-prev");
     const nextCategoryButton = document.querySelector(".category-carousel-control-next");
-    const MY_SERVER = "http://127.0.0.1:8000/";
+    const MY_SERVER = "https://retrysupermarket.onrender.com/";
 
     // Constant to store categories
     const CATEGORIES_LIST = [];
@@ -43,7 +43,7 @@ document.addEventListener("DOMContentLoaded", function () {
         categoryBox.classList.add("carousel-item", "category-box");
 
         const categoryImage = document.createElement("img");
-        categoryImage.src = MY_SERVER + category.image;
+        categoryImage.src = "https://retrysupermarket.onrender.com" + category.image;
         categoryImage.alt = category.name;
 
         const categoryName = document.createElement("p");
@@ -81,7 +81,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const productsSection = document.getElementById("productCarouselInner");
     const prevProductButton = document.querySelector(".product-carousel-control-prev");
     const nextProductButton = document.querySelector(".product-carousel-control-next");
-    const MY_SERVER = "http://127.0.0.1:8000/";
+    const MY_SERVER = "https://retrysupermarket.onrender.com/";
 
     // Constant to store products
     const PRODUCTS_LIST = [];
@@ -122,7 +122,7 @@ document.addEventListener("DOMContentLoaded", function () {
         productBox.classList.add("carousel-item", "product-box");
     
         const productImage = document.createElement("img");
-        productImage.src = MY_SERVER + product.prodimage.replace(/^\/\//, '/'); // Fix for double slash issue
+        productImage.src = "https://retrysupermarket.onrender.com" + product.prodimage.replace(/^\/\//, '/'); // Fix for double slash issue
         productImage.alt = product.name;
     
         const productName = document.createElement("p");
@@ -187,7 +187,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     const orderHistoryNavItem = document.getElementById("orderHistoryNavItem");
     const logoutNavItem = document.getElementById("logoutNavItem");
 
-    const MY_SERVER = "http://127.0.0.1:8000/";
+    const MY_SERVER = "https://retrysupermarket.onrender.com/";
 
     // Check if a user is already logged in
     const checkLoggedInUser = async () => {

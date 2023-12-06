@@ -4,8 +4,8 @@ document.addEventListener("DOMContentLoaded", async function () {
     const usernameElement = document.getElementById("username");
     const orderOptions = document.getElementById("orderOptions");
     const orderCards = document.getElementById("orderCards");
-    const MY_SERVER = "http://127.0.0.1:8000/";
-
+    const MY_SERVER = "https://retrysupermarket.onrender.com/";
+    const MY_IMAGE_SERVER = "https://retrysupermarket.onrender.com"
     // Get the access token from session storage
     const accessToken = sessionStorage.getItem("access_token");
 
@@ -55,7 +55,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                     },
                 });
 
-                console.log(response.data); // Log the data
+                // console.log(response.data); // Log the data
                 orders = response.data;
             } else if (selectedOption === "recent") {
                 // Fetch the three most recent orders
@@ -65,7 +65,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                     },
                 });
 
-                console.log(response.data); // Log the data
+                // console.log(response.data); // Log the data
                 orders = response.data;
             }
 
@@ -149,7 +149,7 @@ window.reuseCart = function (orderID) {
                     // Fetch product details using productID
                     const productResponse = await axios.get(`${MY_SERVER}products/${productID}/`);
                     const productDetails = productResponse.data;
-                    const Image = MY_SERVER+productDetails.prodimage
+                    const Image = MY_IMAGE_SERVER+productDetails.prodimage
                     // Add item to myCart
                     const myCart = JSON.parse(localStorage.getItem("myCart")) || [];
                     myCart.push({
@@ -184,7 +184,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     const orderHistoryNavItem = document.getElementById("orderHistoryNavItem");
     const logoutNavItem = document.getElementById("logoutNavItem");
 
-    const MY_SERVER = "http://127.0.0.1:8000/";
+    const MY_SERVER = "https://retrysupermarket.onrender.com/";
 
     // Check if a user is already logged in
     const checkLoggedInUser = async () => {

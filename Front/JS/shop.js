@@ -1,4 +1,5 @@
 // Function to update the cart
+const IMAGESERVER = "https://retrysupermarket.onrender.com"
 function updateCart(productId, productName, productPrice, productImage, productQuantity) {
     // Convert product price to float
     const productPriceFloat = parseFloat(productPrice);
@@ -98,7 +99,7 @@ function updateTotalOrderPrice() {
     orderTotalPrice.textContent = `Order Total Price: $${globalTotalOrderPrice.toFixed(2)}`;
 }
 
-
+let globalUsername;
 let userId;
 
 document.addEventListener("DOMContentLoaded", async function () {
@@ -108,7 +109,21 @@ document.addEventListener("DOMContentLoaded", async function () {
     const orderHistoryNavItem = document.getElementById("orderHistoryNavItem");
     const logoutNavItem = document.getElementById("logoutNavItem");
 
-    const MY_SERVER = "http://127.0.0.1:8000/";
+    const MY_SERVER = "https://retrysupermarket.onrender.com/";
+
+    // Function to update the userId based on the globalUsername
+    async function updateUserId(username) {
+        try {
+            const response = await axios.get(`https://retrysupermarket.onrender.com/api/get_user_id/${username}/`);
+            if (response && response.data && response.data.user_id) {
+                userId = response.data.user_id;
+            } else {
+                console.error("Error updating userId. Invalid response:", response);
+            }
+        } catch (error) {
+            console.error("Error updating userId:", error);
+        }
+    }
 
     // Check if a user is already logged in
     const checkLoggedInUser = async () => {
@@ -120,13 +135,17 @@ document.addEventListener("DOMContentLoaded", async function () {
             });
 
             if (response && response.data && response.data.username) {
+                //set globalusername
+                globalUsername = response.data.username;
+
+                await updateUserId(globalUsername)
                 // Display welcome message
                 welcomeContainer.innerHTML = `<p>Welcome back, ${response.data.username}!</p>`;
 
                 // If the user is logged in, show Order History and Logout, hide Login and Register
                 orderHistoryNavItem.style.display = "block";
                 logoutNavItem.style.display = "block";
-                loginNavItem.style.display = "none";
+                loginNavItem.style.display = "none"; 
                 registerNavItem.style.display = "none";
             } else {
                 // No user logged in
@@ -144,7 +163,9 @@ document.addEventListener("DOMContentLoaded", async function () {
     };
 
     checkLoggedInUser();
+
 });
+
 
     // Event listener for submitting the order
     const submitOrderBtn = document.getElementById("submitOrderBtn");
@@ -152,7 +173,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     submitOrderBtn.addEventListener("click", async () => {
         const isLoggedIn = sessionStorage.getItem('access_token') !== null;
-        const MY_SERVER = "http://127.0.0.1:8000/";
+        const MY_SERVER = "https://retrysupermarket.onrender.com/";
         // Check if the cart is empty
         const cartItems = Array.from(cartList.querySelectorAll(".cart-item"));
         if (cartItems.length === 0) {
@@ -192,8 +213,8 @@ document.addEventListener("DOMContentLoaded", async function () {
                     alert("Error submitting order.");
                 }
             } catch (error) {
-
-                alert("User Most Be Logged In");
+                console.log(orderData.customer);
+                alert(`User Most Be Logged In${(orderData.customer)}`);
             }
         } else {
             alert("Please log in to submit an order.");
@@ -210,8 +231,8 @@ document.addEventListener("DOMContentLoaded", async function () {
     const myCartBtn = document.getElementById("myCartBtn");
     const cartList = document.getElementById("cartList");
     const myCartModalElement = document.getElementById("myCartModal");
-    const MY_SERVER = "http://127.0.0.1:8000/";
-
+    const MY_SERVER = "https://retrysupermarket.onrender.com/";
+    const MY_IMAGE_SERVER = "https://retrysupermarket.onrender.com";
     // Function to remove the modal backdrop
     const removeModalBackdrop = () => {
         const modalBackdrop = document.querySelector('.modal-backdrop');
@@ -402,48 +423,49 @@ async function displayCategories() {
     });
 }
 
-    // Function to display products
-    function displayProducts() {
-        const filteredProducts = currentCategory
-            ? PRODUCTS_LIST.filter((product) => product.category.name === currentCategory)
-            : PRODUCTS_LIST;
+// Function to display products
+function displayProducts() {
+    const filteredProducts = currentCategory
+        ? PRODUCTS_LIST.filter((product) => product.category.name === currentCategory)
+        : PRODUCTS_LIST;
 
-        const products = filteredProducts.map((product) => {
-            // Convert product price to float
-            const productPriceFloat = parseFloat(product.price);
+    const products = filteredProducts.map((product) => {
+        // Convert product price to float
+        const productPriceFloat = parseFloat(product.price);
 
-            return `<div class="col-md-4">
-                        <div class="card mb-4 box-shadow">
-                            <img class="card-img-top" src="${MY_SERVER}${product.prodimage.replace(/^\/\//, '/')}">
-                            <div class="card-body">
-                                <p class="card-text">${product.name}</p>
-                                <p class="card-text">Price: $${productPriceFloat.toFixed(2)}</p>
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div class="input-group">
-                                        <input type="number" class="form-control product-quantity" value="1" min="1">
-                                        <button type="button" class="btn btn-sm btn-outline-secondary add-to-cart"
-                                            data-product-id="${product.productID}"
-                                            data-product-name="${product.name}"
-                                            data-product-price="${productPriceFloat.toFixed(2)}"
-                                            data-product-image="${MY_SERVER}${product.prodimage.replace(/^\/\//, '/')}">
-                                            Add to Cart
-                                        </button>
-                                    </div>
-                                    <div class="quantity-display">Quantity: ${1}</div>
+        return `<div class="col-md-4">
+                    <div class="card mb-4 box-shadow">
+                        <img class="card-img-top" src="${MY_SERVER}${product.prodimage.replace(/^\/\//, '').replace(/^\//, '')}">
+                        <div class="card-body">
+                            <p class="card-text">${product.name}</p>
+                            <p class="card-text">Price: $${productPriceFloat.toFixed(2)}</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="input-group">
+                                    <input type="number" class="form-control product-quantity" value="1" min="1">
+                                    <button type="button" class="btn btn-sm btn-outline-secondary add-to-cart"
+                                        data-product-id="${product.productID}"
+                                        data-product-name="${product.name}"
+                                        data-product-price="${productPriceFloat.toFixed(2)}"
+                                        data-product-image="${MY_SERVER}${product.prodimage.replace(/^\/\//, '').replace(/^\//, '')}">
+                                        Add to Cart
+                                    </button>
                                 </div>
+                                <div class="quantity-display">Quantity: ${1}</div>
                             </div>
                         </div>
-                    </div>`;
-        });
+                    </div>
+                </div>`;
+    });
 
-        productList.innerHTML = products.join("");
+    productList.innerHTML = products.join("");
 
-        // Event listener for updating quantity display
-        const quantityInputs = productList.querySelectorAll(".product-quantity");
-        quantityInputs.forEach((input) => {
-            input.addEventListener("input", updateQuantityDisplay);
-        });
-    }
+    // Event listener for updating quantity display
+    const quantityInputs = productList.querySelectorAll(".product-quantity");
+    quantityInputs.forEach((input) => {
+        input.addEventListener("input", updateQuantityDisplay);
+    });
+}
+
 
     // Function to update quantity display
     function updateQuantityDisplay(event) {
@@ -502,7 +524,7 @@ function clearCart() {
 
 // Function to load myCart from local storage
 function loadmycart() {
-    const MY_SERVER = "http://127.0.0.1:8000/";
+    const MY_SERVER = "https://retrysupermarket.onrender.com/";
     const cartList = document.getElementById("cartList");
 
     try {

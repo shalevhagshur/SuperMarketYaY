@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
     const registerForm = document.getElementById("registerForm");
-    const MY_SERVER = "http://127.0.0.1:8000/";
+    const MY_SERVER = "https://retrysupermarket.onrender.com/";
 
     registerForm.addEventListener("submit", async function (event) {
         event.preventDefault();
@@ -60,7 +60,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     const orderHistoryNavItem = document.getElementById("orderHistoryNavItem");
     const logoutNavItem = document.getElementById("logoutNavItem");
 
-    const MY_SERVER = "http://127.0.0.1:8000/";
+    const MY_SERVER = "https://retrysupermarket.onrender.com/";
 
     // Check if a user is already logged in
     const checkLoggedInUser = async () => {

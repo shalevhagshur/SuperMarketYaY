@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     const orderHistoryNavItem = document.getElementById("orderHistoryNavItem");
     const logoutNavItem = document.getElementById("logoutNavItem");
 
-    const MY_SERVER = "http://127.0.0.1:8000/";
+    const MY_SERVER = "https://retrysupermarket.onrender.com/";
 
     // Check if a user is already logged in
     const checkLoggedInUser = async () => {
